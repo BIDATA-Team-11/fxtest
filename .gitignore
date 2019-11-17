@@ -1,0 +1,9 @@
+# Ignore Gradle project-specific cache directory
+.gradle
+.project
+.metadata
+
+# Ignore Gradle build output directory
+build
+bin
+jdt.ls-java-project
