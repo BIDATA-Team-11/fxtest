@@ -1,6 +1,6 @@
 package fx;
 
-// import javafx.application.Application;
+import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -27,9 +27,13 @@ public class Chart extends Application {
     Platform.runLater(new Receiver(controller, clq));
 
     Sender sender = new Sender(clq);
-    Thread s = new Thread(sender);
-    s.setDaemon(true);
-    s.start();
+    sender.start();
+    // Thread s = new Thread(sender);
+    // s.setDaemon(true);
+    // s.start();
+
+    Car car = new Car(clq);
+    car.start();
 
   }
 
