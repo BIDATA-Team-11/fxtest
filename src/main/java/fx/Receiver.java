@@ -7,9 +7,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Receiver extends Task<Void> {
   private final FXMLController c;
-  private final ConcurrentLinkedQueue<Kordinater> clq; 
+  private final ConcurrentLinkedQueue<Coordinates> clq; 
 
-  public Receiver(FXMLController c, ConcurrentLinkedQueue<Kordinater> clq) { 
+  public Receiver(FXMLController c, ConcurrentLinkedQueue<Coordinates> clq) { 
     this.c = c;
     this.clq = clq;
   }
@@ -19,8 +19,8 @@ public class Receiver extends Task<Void> {
     while (true) {
       if (isCancelled()) { break; }
 
-      Kordinater k = this.clq.poll();
-      this.c.mapping(k);
+      Coordinates c = this.clq.poll();
+      this.c.mapping(c);
     }
 
     return null;

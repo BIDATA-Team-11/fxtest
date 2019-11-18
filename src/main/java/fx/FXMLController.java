@@ -33,8 +33,8 @@ public class FXMLController implements Initializable {
     this.series = new XYChart.Series<String, Number>();
   }    
 
-  public void mapping(Kordinater k) {
-    this.series.getData().add(new XYChart.Data<String, Number>(String.valueOf(k.x), k.y));
+  public void mapping(Coordinates c) {
+    this.series.getData().add(new XYChart.Data<String, Number>(String.valueOf(c.x), c.y));
     this.chart.getData().setAll(this.series);
   }
 }

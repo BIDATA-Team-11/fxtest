@@ -6,11 +6,8 @@ import javafx.concurrent.Service;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Sender extends Service<Void> {
-  private final ConcurrentLinkedQueue<Kordinater> clq; 
-
-  public Sender(ConcurrentLinkedQueue<Kordinater> clq) { 
-    this.clq = clq;
-  }
+  private final ConcurrentLinkedQueue<Coordinates> clq; 
+  public Sender(ConcurrentLinkedQueue<Coordinates> clq) { this.clq = clq; }
 
   protected Task<Void> createTask() {
     return new Task<Void>() {
@@ -21,8 +18,8 @@ public class Sender extends Service<Void> {
 
           final int n = i;
 
-          Kordinater k = new Kordinater(n, (n+2));
-          clq.add(k);
+          Coordinates c = new Coordinates(n, (n+2));
+          clq.add(c);
         }
 
         return null;
