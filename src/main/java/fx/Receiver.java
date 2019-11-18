@@ -8,10 +8,13 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class Receiver extends Task<Void> {
   private final FXMLController c;
   private final ConcurrentLinkedQueue<Coordinates> clq; 
+  // private final ConcurrentLinkedQueue<Integer> r; 
 
+  // public Receiver(FXMLController c, ConcurrentLinkedQueue<Coordinates> clq, ConcurrentLinkedQueue<Integer> r) { 
   public Receiver(FXMLController c, ConcurrentLinkedQueue<Coordinates> clq) { 
     this.c = c;
     this.clq = clq;
+    // this.r = r;
   }
 
   @Override 
@@ -21,6 +24,9 @@ public class Receiver extends Task<Void> {
 
       Coordinates c = this.clq.poll();
       this.c.mapping(c);
+      
+      // Integer i = this.r.peek();
+      // System.out.println(i.intValue());
     }
 
     return null;
@@ -30,7 +36,6 @@ public class Receiver extends Task<Void> {
   protected void cancelled() {
     super.cancelled();
     updateMessage("Cancelled!");
-    // TODO: Close logic
   }
 
   @Override 

@@ -65,15 +65,14 @@ public class Gyro extends Service<Void>  {
 
   protected Task<Void> createTask() {
     return new Task<Void>() {
-      protected Void call() throws Exception {
+      float angle;
 
-        try {
-          while (true) {
-            if (isCancelled()) { close(); break; }     
-            if (Thread.interrupted()) { close(); break; }
-          }
-        } catch (Exception e) {
-          close();
+      protected Void call() throws Exception {
+        while (!isCancelled()) {
+          if (Thread.interrupted()) { close(); break; }
+
+          angle = getAngle();
+          // System.out.println(angle);
         }
 
         return null;

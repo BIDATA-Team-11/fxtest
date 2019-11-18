@@ -29,7 +29,6 @@ public class Sender extends Service<Void> {
       protected void cancelled() {
         super.cancelled();
         updateMessage("Cancelled!");
-        // TODO: Close logic
       }
 
       @Override 

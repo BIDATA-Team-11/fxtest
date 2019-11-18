@@ -10,6 +10,8 @@ import java.lang.InterruptedException;
 import javafx.concurrent.Task;
 import javafx.concurrent.Service;
 
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 /**
  * Class that implements the simplemotor used for the NXTUltrasonicSensor.
  *
@@ -26,14 +28,17 @@ public class MediumMotor extends Service<Void> {
   private RMIRegulatedMotor motor;
   private String port;
 
+  private final ConcurrentLinkedQueue<Integer> rotation;
+
   /**
    * Construct new simplemotor object using default Ev3 brick.
    *
    * @param port physical port where the motor is connected.
    */
-  public MediumMotor(RemoteEV3 ev3, String port) { 
+  public MediumMotor(RemoteEV3 ev3, String port, final ConcurrentLinkedQueue<Integer> rotation) { 
     this.ev3 = ev3; this.port = port; 
     this.motor = this.ev3.createRegulatedMotor(this.port, 'M'); 
+    this.rotation = rotation;
   }
 
   /**
@@ -42,7 +47,7 @@ public class MediumMotor extends Service<Void> {
    * @throws RemoteException Exception is thrown if an error occurs.
    */
   public void close() throws RemoteException {
-    try { this.motor.close(); }
+    try { this.motor.close(); cancel(); }
     catch (Exception e) { e.printStackTrace(); }
   }
 
@@ -62,14 +67,30 @@ public class MediumMotor extends Service<Void> {
 
   protected Task<Void> createTask() {
     return new Task<Void>() {
-      protected Void call() throws Exception {
+      boolean resetAngle = false;
 
+      protected Void call() throws Exception {
         try {
-          while (true) {
-            if (isCancelled()) { close(); break; }     
+          while (!isCancelled()) {
             if (Thread.interrupted()) { close(); break; }
+
+            if (resetAngle) {
+              rotate(0);
+              resetAngle = false;
+
+              rotation.add(Integer.valueOf(0));
+              System.out.printf("Sending Rotation %s\n", Integer.valueOf(0).intValue());
+            } else {
+              rotate(-90);
+              resetAngle = true;
+
+              rotation.add(Integer.valueOf(90));
+              System.out.printf("Sending Rotation %s\n", Integer.valueOf(90).intValue());
+            }
           }
         } catch (Exception e) {
+          e.printStackTrace();
+        } finally {
           close();
         }
 

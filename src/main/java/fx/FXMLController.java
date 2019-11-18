@@ -11,6 +11,8 @@ import javafx.scene.chart.CategoryAxis;
 
 import  javafx.collections.ObservableList;
 
+import java.util.ArrayList;
+
 public class FXMLController implements Initializable {
 
   private XYChart.Series<String, Number> series;

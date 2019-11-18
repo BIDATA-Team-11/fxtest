@@ -7,6 +7,7 @@ import java.lang.InterruptedException;
 
 import javafx.concurrent.Task;
 import javafx.concurrent.Service;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * NXTUltrasonicSensor implementation of the DistanceMeasure interface.
@@ -25,15 +26,20 @@ public class Ultrasonic extends Service<Void> {
   private RemoteEV3 ev3;
   private String port;
 
+  private final ConcurrentLinkedQueue<Radar> radar;
+  private final ConcurrentLinkedQueue<Integer> rotation;
+
   /**
    * Construct new ultrasonic object using default EV3 brick.
    *
    * @param port Physical port where the sensor is connected.
    */
-  public Ultrasonic(RemoteEV3 ev3, String port) {
+  public Ultrasonic(RemoteEV3 ev3, String port, ConcurrentLinkedQueue<Radar> radar, ConcurrentLinkedQueue<Integer> rotation) {
     this.port = port;
     this.ev3 = ev3;
     this.sampleProvider = ev3.createSampleProvider(this.port, "lejos.hardware.sensor.EV3UltrasonicSensor", "Distance");
+    this.radar = radar;
+    this.rotation = rotation;
   }
 
   /**
@@ -62,18 +68,31 @@ public class Ultrasonic extends Service<Void> {
    *
    * @throws IOException - Exception is thrown if an error occurs.
    */
-  public void close() throws Exception { this.sampleProvider.close(); }
+  public void close() throws Exception { this.sampleProvider.close(); cancel(); }
 
   protected Task<Void> createTask() {
     return new Task<Void>() {
-      protected Void call() throws Exception {
+      Float distance;
 
+      protected Void call() throws Exception {
         try {
-          while (true) {
-            if (isCancelled()) { close(); break; }     
+          while (!isCancelled()) {
             if (Thread.interrupted()) { close(); break; }
+
+            if (!rotation.isEmpty()) {
+              Integer angle = rotation.poll();
+              System.out.printf("Angle: %s\n", angle.intValue());
+
+              if (angle.intValue() == 90 || angle.intValue() == 0) {
+                System.out.println("Radar måling");
+                distance = Float.valueOf(getDistance());
+                radar.add(new Radar(distance, angle));
+              }
+            }
           }
         } catch (Exception e) {
+          e.printStackTrace();
+        } finally {
           close();
         }
 

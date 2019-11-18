@@ -9,6 +9,7 @@ import java.lang.InterruptedException;
 
 import javafx.concurrent.Task;
 import javafx.concurrent.Service;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * Class for implementing NXTRegulatedMotor.
@@ -26,8 +27,11 @@ public class LargeMotor extends Service<Void> {
   private RMIRegulatedMotor leftMotor;
   private RMIRegulatedMotor rightMotor;
 
+  private final ConcurrentLinkedQueue<Coordinates> coordinates;
+  private final ConcurrentLinkedQueue<Radar> radar;
+
   public static final float wheelCircumference = 2.0f * 3.14159265f * 1.5f;
-  public static final float minimumDistanceToObstacle = 0.2f;
+  public static final float minimumDistanceToObstacle = 0.5f;
 
   /**
    * Constructer for setting value of ev3. It also pairs left and right motor with
@@ -35,10 +39,13 @@ public class LargeMotor extends Service<Void> {
    *
    * @param ev3 RMI connection to EV3 computer
    */
-  public LargeMotor(RemoteEV3 ev3, String port1, String port2) {
+  public LargeMotor(RemoteEV3 ev3, String port1, String port2, 
+      ConcurrentLinkedQueue<Coordinates> coordinates, ConcurrentLinkedQueue<Radar> radar) {
     this.ev3 = ev3;
     this.leftMotor = this.ev3.createRegulatedMotor(port1, 'L');
     this.rightMotor = this.ev3.createRegulatedMotor(port2, 'L');
+    this.coordinates = coordinates;
+    this.radar = radar;
   }
 
   /**
@@ -47,12 +54,16 @@ public class LargeMotor extends Service<Void> {
    * @throws RemoteException - Exception is thrown if an error occurss.
    */
   public void close() throws RemoteException {
-    stop();
+    try {
+      stop();
 
-    this.leftMotor.close();
-    this.rightMotor.close();
+      this.leftMotor.close();
+      this.rightMotor.close();
 
-    cancel();
+      cancel();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 
     Thread.currentThread().interrupt();
   }
@@ -109,25 +120,37 @@ public class LargeMotor extends Service<Void> {
 
   protected Task<Void> createTask() {
     return new Task<Void>() {
-      protected Void call() throws Exception {
+      int testX = 0;
+      int testY = 0;
 
+      protected Void call() throws Exception {
         try {
           while (!isCancelled()) {
-            // if (isCancelled()) { close(); cancel(); break; }     
             if (Thread.currentThread().isInterrupted()) { close(); cancel(); break; }
-            // Melding melding = klar.take();
 
-            // if (melding.distance < minimumDistanceToObstacle) {
-            //   if (melding.vinkel <= 0) {
-            //     motor.left();
-            //   } else {
-            //     motor.right();
-            //   }
-            // }
-            // kordinater.add(new Kordinater(++testX, ++testY));
-            forward();
+            System.out.println("Reach Radar Poll at LargeMotor!");
+            if (!radar.isEmpty()) {
+              Radar r = radar.poll();
+
+              System.out.printf("Distance: %s Angle: %s\n", r.distance, r.angle);
+
+              if (r.distance < minimumDistanceToObstacle) {
+                if (r.angle <= 0) {
+                  left();
+                } else {
+                  right();
+                }
+              } else {
+                forward();
+              }
+
+              coordinates.add(new Coordinates(++testX, ++testY));
+            }
+
           }
         } catch (Exception e) {
+          e.printStackTrace();
+        } finally {
           close();
         }
 
