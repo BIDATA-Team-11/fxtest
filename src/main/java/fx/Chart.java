@@ -10,6 +10,10 @@ import javafx.application.Platform;
 import lejos.remote.ev3.RemoteEV3;
 import java.rmi.RemoteException;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import javafx.concurrent.ScheduledService;
+
+import javafx.concurrent.Task;
+import javafx.util.Duration;
 
 public class Chart extends Application {
   private RemoteEV3 connect() throws Exception {
@@ -32,8 +36,9 @@ public class Chart extends Application {
     final ConcurrentLinkedQueue<Radar> radar = new ConcurrentLinkedQueue<Radar>();
     final ConcurrentLinkedQueue<Integer> rotation = new ConcurrentLinkedQueue<Integer>();
 
-    Receiver receiver = new Receiver(controller, coordinates);
-    Platform.runLater(receiver);
+    final ReceiverService receiver = new ReceiverService(controller, coordinates);
+    receiver.setPeriod(Duration.seconds(2));
+    receiver.start();
 
     final RemoteEV3 ev3 = connect();
 

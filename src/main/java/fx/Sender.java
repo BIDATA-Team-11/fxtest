@@ -15,14 +15,25 @@ public class Sender extends Service<Void> {
       protected Void call() throws Exception {
         int i = 0;
 
-        // while (true) {
-        for (i = 0; i < 10; ++i) {
+        while (true) {
+        // for (i = 0; i < 10; ++i) {
           if (isCancelled()) { break; }
 
           final int n = i;
 
+          // System.out.printf("sending %s\n", n);
+
           Coordinates c = new Coordinates(n, (n+2));
           clq.add(c);
+
+          ++i;
+
+          try {
+            Thread.sleep(2000);
+          } catch (Exception e) {
+            System.out.println("EXCEPTION");
+            e.printStackTrace();
+          }
         }
 
         return null;
