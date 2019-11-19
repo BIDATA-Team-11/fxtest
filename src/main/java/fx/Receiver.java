@@ -3,30 +3,26 @@ package fx;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 
+// import javafx.application.Platform;
+// import javafx.stage.Stage;
+
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Receiver extends Task<Void> {
   private final FXMLController c;
   private final ConcurrentLinkedQueue<Coordinates> clq; 
-  // private final ConcurrentLinkedQueue<Integer> r; 
 
-  // public Receiver(FXMLController c, ConcurrentLinkedQueue<Coordinates> clq, ConcurrentLinkedQueue<Integer> r) { 
   public Receiver(FXMLController c, ConcurrentLinkedQueue<Coordinates> clq) { 
     this.c = c;
     this.clq = clq;
-    // this.r = r;
   }
 
   @Override 
   protected Void call() throws Exception {
-    while (true) {
-      if (isCancelled()) { break; }
-
+    while (!isCancelled()) {
       Coordinates c = this.clq.poll();
+      System.out.println(c.x);
       this.c.mapping(c);
-      
-      // Integer i = this.r.peek();
-      // System.out.println(i.intValue());
     }
 
     return null;

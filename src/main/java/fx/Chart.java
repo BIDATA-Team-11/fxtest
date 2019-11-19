@@ -7,14 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.application.Platform;
 
-import lejos.remote.ev3.RMIRemoteKey;
 import lejos.remote.ev3.RemoteEV3;
 import java.rmi.RemoteException;
-import java.lang.InterruptedException;
-import java.io.IOException;
-import java.util.concurrent.LinkedBlockingQueue;
-
-
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Chart extends Application {
@@ -26,13 +20,7 @@ public class Chart extends Application {
   }
 
   @Override
-  public void stop() {
-    this.stop();
-    Thread.currentThread().interrupt();
-  }
-
-  @Override
-  public void start(Stage primaryStage) throws Exception {
+  public void start(final Stage primaryStage) throws Exception {
     FXMLLoader loader = new FXMLLoader(getClass().getResource("view/chart.fxml"));
     primaryStage.setTitle("OpenJFX Threaded Send and Receive");
     primaryStage.setScene(new Scene((Parent) loader.load()));
@@ -44,44 +32,32 @@ public class Chart extends Application {
     final ConcurrentLinkedQueue<Radar> radar = new ConcurrentLinkedQueue<Radar>();
     final ConcurrentLinkedQueue<Integer> rotation = new ConcurrentLinkedQueue<Integer>();
 
-    // Platform.runLater(new Receiver(controller, coordinates, rotation));
-    Platform.runLater(new Receiver(controller, coordinates));
+    Receiver receiver = new Receiver(controller, coordinates);
+    Platform.runLater(receiver);
 
     final RemoteEV3 ev3 = connect();
 
+    final Sender sender = new Sender(coordinates);
     final MediumMotor rotator = new MediumMotor(ev3, "B", rotation);
     final Ultrasonic sonic = new Ultrasonic(ev3, "S1", radar, rotation);
     final LargeMotor car = new LargeMotor(ev3, "A", "C", coordinates, radar);
     // final Gyro gyro = new Gyro(ev3, "S2");
     // final Color color = new Color(ev3, "S3");
 
-    final Sender sender = new Sender(coordinates);
-    
-    Runtime.getRuntime().addShutdownHook(new Thread() {
-      public void run() { 
-        sender.cancel();
-        rotator.cancel();
-        sonic.cancel();
-        car.cancel();
-        // gyro.cancel();
-        // color.cancel();
-      }
-    });
-
     try {
       sender.start();
       rotator.start();
       sonic.start();
       car.start();
-      // gyro.start();
-      // color.start();
+    //   // gyro.start();
+    //   // color.start();
     } catch (Exception e) {
       sender.cancel();
       rotator.cancel();
       sonic.cancel();
       car.cancel();
-      // gyro.cancel();
-      // color.cancel();
+    //   // gyro.cancel();
+    //   // color.cancel();
     }
   }
 }

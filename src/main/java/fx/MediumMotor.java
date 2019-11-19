@@ -79,13 +79,11 @@ public class MediumMotor extends Service<Void> {
               resetAngle = false;
 
               rotation.add(Integer.valueOf(0));
-              System.out.printf("Sending Rotation %s\n", Integer.valueOf(0).intValue());
             } else {
               rotate(-90);
               resetAngle = true;
 
               rotation.add(Integer.valueOf(90));
-              System.out.printf("Sending Rotation %s\n", Integer.valueOf(90).intValue());
             }
           }
         } catch (Exception e) {

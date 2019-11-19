@@ -73,6 +73,7 @@ public class Ultrasonic extends Service<Void> {
   protected Task<Void> createTask() {
     return new Task<Void>() {
       Float distance;
+      float d;
 
       protected Void call() throws Exception {
         try {
@@ -81,11 +82,16 @@ public class Ultrasonic extends Service<Void> {
 
             if (!rotation.isEmpty()) {
               Integer angle = rotation.poll();
-              System.out.printf("Angle: %s\n", angle.intValue());
 
               if (angle.intValue() == 90 || angle.intValue() == 0) {
-                System.out.println("Radar måling");
-                distance = Float.valueOf(getDistance());
+                d = getDistance();
+
+                if (!Float.isInfinite(d)) {
+                  distance = Float.valueOf(d);
+                } else {
+                  distance = Float.valueOf(2);
+                }
+
                 radar.add(new Radar(distance, angle));
               }
             }

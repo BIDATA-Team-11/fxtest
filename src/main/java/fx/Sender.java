@@ -11,9 +11,12 @@ public class Sender extends Service<Void> {
 
   protected Task<Void> createTask() {
     return new Task<Void>() {
+
       protected Void call() throws Exception {
-        int i;
-        for (i = 0; i < 10; i++) {
+        int i = 0;
+
+        // while (true) {
+        for (i = 0; i < 10; ++i) {
           if (isCancelled()) { break; }
 
           final int n = i;

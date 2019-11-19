@@ -30,9 +30,6 @@ public class LargeMotor extends Service<Void> {
   private final ConcurrentLinkedQueue<Coordinates> coordinates;
   private final ConcurrentLinkedQueue<Radar> radar;
 
-  public static final float wheelCircumference = 2.0f * 3.14159265f * 1.5f;
-  public static final float minimumDistanceToObstacle = 0.5f;
-
   /**
    * Constructer for setting value of ev3. It also pairs left and right motor with
    * ports.
@@ -55,8 +52,6 @@ public class LargeMotor extends Service<Void> {
    */
   public void close() throws RemoteException {
     try {
-      stop();
-
       this.leftMotor.close();
       this.rightMotor.close();
 
@@ -64,8 +59,6 @@ public class LargeMotor extends Service<Void> {
     } catch (Exception e) {
       e.printStackTrace();
     }
-
-    Thread.currentThread().interrupt();
   }
 
   /**
@@ -123,22 +116,37 @@ public class LargeMotor extends Service<Void> {
       int testX = 0;
       int testY = 0;
 
+      final float minimumDistanceToObstacle = 0.2f;    
+      final float maximumDistanceToObstacle = 0.4f;    
+
+      boolean obstacleInFront = false;
+
       protected Void call() throws Exception {
         try {
           while (!isCancelled()) {
-            if (Thread.currentThread().isInterrupted()) { close(); cancel(); break; }
+            if (Thread.interrupted()) { close(); break; }
 
-            System.out.println("Reach Radar Poll at LargeMotor!");
             if (!radar.isEmpty()) {
               Radar r = radar.poll();
 
               System.out.printf("Distance: %s Angle: %s\n", r.distance, r.angle);
 
-              if (r.distance < minimumDistanceToObstacle) {
-                if (r.angle <= 0) {
-                  left();
-                } else {
+              if (r.angle <= 0) {
+                if (r.distance < minimumDistanceToObstacle) {
                   right();
+                  obstacleInFront = true;
+                } else {
+                  forward();
+                  obstacleInFront = false;
+                }
+
+              } else if (r.angle >= 90 && !obstacleInFront) {
+                if (r.distance > maximumDistanceToObstacle) {
+                  left();
+                } else if (r.distance < minimumDistanceToObstacle) {
+                  right();
+                } else {
+                  forward();
                 }
               } else {
                 forward();
