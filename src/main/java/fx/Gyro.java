@@ -60,7 +60,7 @@ public class Gyro extends Service<Void> {
    * @throws RemoteException Throws an exception if an error occurs
    */
   public float[] getSample() throws RemoteException {
-    float[] sample = null;
+    float[] sample;
     sample = this.sampleProvider.fetchSample();
 
     return sample;
@@ -80,7 +80,7 @@ public class Gyro extends Service<Void> {
   /**
    * Override close method to close the sample provider
    *
-   * @throws IOException Throws an IOException if an error occurs
+   * @throws Exception Throws an Exception if an error occurs
    */
   public void close() throws Exception {
     this.sampleProvider.close();
