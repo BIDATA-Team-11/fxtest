@@ -30,7 +30,9 @@ package fx;
  * @author Gruppe 11, dataingeniør NTNU, første semester.
  */
 public class Coordinates {
+  // The x-coordinate
   final public int x;
+  // The y-coordinate
   final public int y;
 
   /**
