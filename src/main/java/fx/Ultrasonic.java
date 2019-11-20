@@ -89,7 +89,7 @@ public class Ultrasonic extends Service<Void> {
     cancel();
   }
   /**
-   * Satisfy the Service class
+   * Satisfies the Service class
    * @see Service
    */
   protected Task<Void> createTask() {
