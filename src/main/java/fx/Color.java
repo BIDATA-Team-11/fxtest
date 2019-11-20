@@ -68,9 +68,9 @@ public class Color extends Service<Void> {
 
   /**
    * Method that returns the first sample in the float array provided by
-   * {@link Farge#getSample()}
+   * {@link Color#getSample()}
    *
-   * @return The first element in the array given by {@link Farge#getSample()}
+   * @return The first element in the array given by {@link Color#getSample()}
    * @throws RemoteException Throws a RemoteException if an error occurs
    */
   public float getColor() throws RemoteException {
@@ -80,7 +80,7 @@ public class Color extends Service<Void> {
   /**
    * Override close method to close the sample provider
    *
-   * @throws IOException Throws an IOException if an error occurs
+   * @throws RemoteException Throws an RemoteException if an error occurs
    */
   public void close() throws RemoteException {
     this.sampleProvider.close();
