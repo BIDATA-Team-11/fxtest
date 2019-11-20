@@ -34,7 +34,7 @@ public class Radar {
   float angle;
 
   /**
-   *
+   * Constructor that takes distance and angle variables
    * @param distance to target.
    * @param angle    relative to robot axis.
    */
