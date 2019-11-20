@@ -88,7 +88,10 @@ public class Ultrasonic extends Service<Void> {
     this.sampleProvider.close();
     cancel();
   }
-
+  /**
+   * Satisfy the Service class
+   * @see Service
+   */
   protected Task<Void> createTask() {
     return new Task<Void>() {
       Float distance;
