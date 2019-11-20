@@ -88,7 +88,10 @@ public class Ultrasonic extends Service<Void> {
     this.sampleProvider.close();
     cancel();
   }
-
+  /**
+   * Satisfies the Service class
+   * @see Service
+   */
   protected Task<Void> createTask() {
     return new Task<Void>() {
       Float distance;
@@ -125,28 +128,6 @@ public class Ultrasonic extends Service<Void> {
         }
 
         return null;
-      }
-
-      @Override
-      protected void cancelled() {
-        super.cancelled();
-        updateMessage("Cancelled!");
-        try {
-          close();
-        } catch (Exception e) {
-          System.out.println(e);
-        }
-      }
-
-      @Override
-      protected void failed() {
-        super.failed();
-        updateMessage("Failed!");
-        try {
-          close();
-        } catch (Exception e) {
-          System.out.println(e);
-        }
       }
     };
   }
