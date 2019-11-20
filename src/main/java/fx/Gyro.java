@@ -3,8 +3,6 @@ package fx;
 import lejos.remote.ev3.RemoteEV3;
 import lejos.remote.ev3.RMISampleProvider;
 import java.rmi.RemoteException;
-import java.lang.InterruptedException;
-
 import javafx.concurrent.Task;
 import javafx.concurrent.Service;
 
@@ -22,7 +20,6 @@ import javafx.concurrent.Service;
  */
 public class Gyro extends Service<Void> {
   private RMISampleProvider sampleProvider;
-  private RemoteEV3 ev3;
   private String port;
 
   /**
@@ -35,7 +32,6 @@ public class Gyro extends Service<Void> {
    */
   public Gyro(RemoteEV3 ev3, String port) {
     this.port = port;
-    this.ev3 = ev3;
     this.sampleProvider = ev3.createSampleProvider(this.port, "lejos.hardware.sensor.EV3GyroSensor", "Angle");
   }
 
@@ -74,19 +70,13 @@ public class Gyro extends Service<Void> {
 
   protected Task<Void> createTask() {
     return new Task<Void>() {
-      float angle;
-
       protected Void call() throws Exception {
         while (!isCancelled()) {
           if (Thread.interrupted()) {
             close();
             break;
           }
-
-          angle = getAngle();
-          // System.out.println(angle);
         }
-
         return null;
       }
 

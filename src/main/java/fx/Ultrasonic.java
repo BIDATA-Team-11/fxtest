@@ -3,8 +3,6 @@ package fx;
 import lejos.remote.ev3.RemoteEV3;
 import lejos.remote.ev3.RMISampleProvider;
 import java.rmi.RemoteException;
-import java.lang.InterruptedException;
-
 import javafx.concurrent.Task;
 import javafx.concurrent.Service;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -22,7 +20,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public class Ultrasonic extends Service<Void> {
   private RMISampleProvider sampleProvider;
-  private RemoteEV3 ev3;
   private String port;
 
   private final ConcurrentLinkedQueue<Radar> radar;
@@ -36,7 +33,6 @@ public class Ultrasonic extends Service<Void> {
   public Ultrasonic(RemoteEV3 ev3, String port, ConcurrentLinkedQueue<Radar> radar,
       ConcurrentLinkedQueue<Integer> rotation) {
     this.port = port;
-    this.ev3 = ev3;
     this.sampleProvider = ev3.createSampleProvider(this.port, "lejos.hardware.sensor.EV3UltrasonicSensor", "Distance");
     this.radar = radar;
     this.rotation = rotation;

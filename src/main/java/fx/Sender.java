@@ -2,7 +2,6 @@ package fx;
 
 import javafx.concurrent.Task;
 import javafx.concurrent.Service;
-
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
@@ -73,5 +72,4 @@ public class Sender extends Service<Void> {
       }
     };
   }
-
 }

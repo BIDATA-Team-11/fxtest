@@ -2,11 +2,7 @@ package fx;
 
 import lejos.remote.ev3.RemoteEV3;
 import lejos.remote.ev3.RMIRegulatedMotor;
-import lejos.robotics.RegulatedMotor;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.lang.InterruptedException;
-
 import javafx.concurrent.Task;
 import javafx.concurrent.Service;
 

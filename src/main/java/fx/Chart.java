@@ -5,14 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.application.Platform;
-
 import lejos.remote.ev3.RemoteEV3;
-import java.rmi.RemoteException;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import javafx.concurrent.ScheduledService;
-
-import javafx.concurrent.Task;
 import javafx.util.Duration;
 
 /**

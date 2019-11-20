@@ -1,10 +1,8 @@
 package fx;
 
 import javafx.concurrent.Task;
-import javafx.fxml.FXMLLoader;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import javafx.application.Platform;
-
 import javafx.concurrent.ScheduledService;
 
 /**

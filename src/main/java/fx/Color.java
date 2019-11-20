@@ -3,8 +3,6 @@ package fx;
 import lejos.remote.ev3.RemoteEV3;
 import lejos.remote.ev3.RMISampleProvider;
 import java.rmi.RemoteException;
-import java.lang.InterruptedException;
-
 import javafx.concurrent.Task;
 import javafx.concurrent.Service;
 
@@ -21,7 +19,6 @@ import javafx.concurrent.Service;
  */
 public class Color extends Service<Void> {
   private RMISampleProvider sampleProvider;
-  private RemoteEV3 ev3;
   private String port;
 
   /**
@@ -34,7 +31,6 @@ public class Color extends Service<Void> {
    */
   public Color(RemoteEV3 ev3, String port) {
     this.port = port;
-    this.ev3 = ev3;
     this.sampleProvider = ev3.createSampleProvider(this.port, "lejos.hardware.sensor.EV3ColorSensor", "RGB");
   }
 
@@ -74,19 +70,13 @@ public class Color extends Service<Void> {
 
   protected Task<Void> createTask() {
     return new Task<Void>() {
-      float colorID;
-
       protected Void call() throws Exception {
         while (!isCancelled()) {
           if (Thread.interrupted()) {
             close();
             break;
           }
-
-          colorID = getColor();
-          // System.out.println(colorID);
         }
-
         return null;
       }
 

@@ -9,10 +9,6 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.CategoryAxis;
 
-import javafx.collections.ObservableList;
-
-import java.util.ArrayList;
-
 /**
  * TODO
  */
