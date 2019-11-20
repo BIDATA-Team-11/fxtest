@@ -68,9 +68,9 @@ public class Color extends Service<Void> {
 
   /**
    * Method that returns the first sample in the float array provided by
-   * {@link Farge#getSample()}
+   * {@link Color#getSample()}
    *
-   * @return The first element in the array given by {@link Farge#getSample()}
+   * @return The first element in the array given by {@link Color#getSample()}
    * @throws RemoteException Throws a RemoteException if an error occurs
    */
   public float getColor() throws RemoteException {
@@ -80,19 +80,32 @@ public class Color extends Service<Void> {
   /**
    * Override close method to close the sample provider
    *
-   * @throws IOException Throws an IOException if an error occurs
+   * @throws RemoteException Throws an RemoteException if an error occurs
    */
   public void close() throws RemoteException {
     this.sampleProvider.close();
   }
 
+  /**
+   * Satisfies the Service class
+   *
+   * @return null
+   * @see Service
+   */
   protected Task<Void> createTask() {
     return new Task<Void>() {
+
+      /**
+       * Logic for using the color sensor
+       *
+       * @return null
+       * @throws Exception Exception is thrown if an error occurs
+       */
       protected Void call() throws Exception {
         while (!isCancelled()) {
           if (Thread.interrupted()) { close(); break; }
 
-          float colorID = getColor();
+         // float colorID = getColor();
         }
         return null;
       }

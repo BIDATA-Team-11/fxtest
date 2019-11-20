@@ -48,6 +48,10 @@ public class LargeMotor extends Service<Void> {
    * Constructer for setting value of ev3. It also pairs left and right motor with
    * ports.
    *
+   * @param port1 physical port where the first motor is connected
+   * @param port2 physical port where the second motor is connected
+   * @param coordinates Communication queue which holds coordinates
+   * @param radar Communication queue which holds radar values
    * @param ev3 Remote connection to EV3 computer
    */
   public LargeMotor(RemoteEV3 ev3, String port1, String port2, ConcurrentLinkedQueue<Coordinates> coordinates,

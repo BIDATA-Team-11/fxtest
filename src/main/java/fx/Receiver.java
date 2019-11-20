@@ -40,6 +40,11 @@ public class Receiver extends ScheduledService<Void> {
   private final FXMLController c;
   private final ConcurrentLinkedQueue<Coordinates> clq; 
 
+  /**
+   * constructs a new receiver which continuously listen for new coordinates.
+   * @param c The controller.
+   * @param clq Concurrent linked queue with the coordinates.
+   */
   public Receiver(FXMLController c, ConcurrentLinkedQueue<Coordinates> clq) { 
 
     this.c = c;
@@ -47,7 +52,7 @@ public class Receiver extends ScheduledService<Void> {
   }
   /**
   * Satisfy the Service class
-  * @see Service
+  * @see ScheduledService
   */
   protected Task<Void> createTask() {
     return new Task<Void>() {

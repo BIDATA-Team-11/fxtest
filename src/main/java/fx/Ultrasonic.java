@@ -46,7 +46,10 @@ public class Ultrasonic extends Service<Void> {
   /**
    * Construct new ultrasonic object using default EV3 brick.
    *
-   * @param port Physical port where the sensor is connected.
+   * @param radar radar class with concurrent que
+   * @param ev3 remote connection to ev3
+   * @param port String for what port the supersonic is plugged into
+   * @param rotation integer that gives a rotation value
    */
   public Ultrasonic(RemoteEV3 ev3, String port, ConcurrentLinkedQueue<Radar> radar,
       ConcurrentLinkedQueue<Integer> rotation) {
@@ -82,7 +85,7 @@ public class Ultrasonic extends Service<Void> {
   /**
    * Method for closing the ultrasonicsensor port.
    *
-   * @throws IOException - Exception is thrown if an error occurs.
+   * @throws Exception - Exception is thrown if an error occurs.
    */
   public void close() throws Exception {
     this.sampleProvider.close();

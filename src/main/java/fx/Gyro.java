@@ -45,7 +45,7 @@ public class Gyro extends Service<Void> {
    * connected to, as well as creating a sample provider for the given port, with
    * a sensor name and mode name.
    *
-   * @param ev3  The ev3 that's being input
+   * @param ev3  Remote connection to Ev3 computer
    * @param port The port the sensor is connected to
    */
   public Gyro(RemoteEV3 ev3, String port) {
@@ -60,7 +60,7 @@ public class Gyro extends Service<Void> {
    * @throws RemoteException Throws an exception if an error occurs
    */
   public float[] getSample() throws RemoteException {
-    float[] sample = null;
+    float[] sample;
     sample = this.sampleProvider.fetchSample();
 
     return sample;
@@ -80,12 +80,18 @@ public class Gyro extends Service<Void> {
   /**
    * Override close method to close the sample provider
    *
-   * @throws IOException Throws an IOException if an error occurs
+   * @throws Exception Throws an Exception if an error occurs
    */
   public void close() throws Exception {
     this.sampleProvider.close();
   }
 
+  /**
+   * Satisfies the Service class
+   *
+   * @return null
+   * @see Service
+   */
   protected Task<Void> createTask() {
     return new Task<Void>() {
       protected Void call() throws Exception {

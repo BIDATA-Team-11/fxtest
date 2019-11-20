@@ -28,7 +28,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import javafx.util.Duration;
 
 /**
- * TODO
+ * The OpenJFX user interface. The class initiating the userinterface and
+ * starts the GeoBot.
  *
  * @author Stian Selvåg
  * @author Herman Aagaard
@@ -47,10 +48,12 @@ public class Chart extends Application {
   }
 
   /**
-   * TODO: javadoc
+   * Creates the starter function for the Application class (OpenJFX runtime).
    *
-   * @param primaryStage TODO
-   * @throws Exception TODO
+   * @param primaryStage OpenJFX Stage.
+   * @throws Exception Throws an exception if the application initiation fails.
+   *
+   * @see Stage
    */
   @Override
   public void start(final Stage primaryStage) throws Exception {

@@ -30,14 +30,16 @@ package fx;
  * @author Gruppe 11, dataingeniør NTNU, første semester.
  */
 public class Coordinates {
+  /** The x-coordinate */
   final public int x;
+  /** The y-coordinate */
   final public int y;
 
   /**
    * Constructs a coordinate object.
    *
-   * @param x
-   * @param y
+   * @param x Puts a point along the x-axis
+   * @param y Puts a point along the y-axis
    */
   public Coordinates(int x, int y) {
     this.x = x;
