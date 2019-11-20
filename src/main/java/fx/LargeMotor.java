@@ -36,8 +36,8 @@ public class LargeMotor extends Service<Void> {
    *
    * @param ev3 RMI connection to EV3 computer
    */
-  public LargeMotor(RemoteEV3 ev3, String port1, String port2, 
-      ConcurrentLinkedQueue<Coordinates> coordinates, ConcurrentLinkedQueue<Radar> radar) {
+  public LargeMotor(RemoteEV3 ev3, String port1, String port2, ConcurrentLinkedQueue<Coordinates> coordinates,
+      ConcurrentLinkedQueue<Radar> radar) {
     this.ev3 = ev3;
     this.leftMotor = this.ev3.createRegulatedMotor(port1, 'L');
     this.rightMotor = this.ev3.createRegulatedMotor(port2, 'L');
@@ -116,15 +116,18 @@ public class LargeMotor extends Service<Void> {
       int testX = 0;
       int testY = 0;
 
-      final float minimumDistanceToObstacle = 0.2f;    
-      final float maximumDistanceToObstacle = 0.4f;    
+      final float minimumDistanceToObstacle = 0.2f;
+      final float maximumDistanceToObstacle = 0.4f;
 
       boolean obstacleInFront = false;
 
       protected Void call() throws Exception {
         try {
           while (!isCancelled()) {
-            if (Thread.interrupted()) { close(); break; }
+            if (Thread.interrupted()) {
+              close();
+              break;
+            }
 
             if (!radar.isEmpty()) {
               Radar r = radar.poll();
@@ -165,7 +168,7 @@ public class LargeMotor extends Service<Void> {
         return null;
       }
 
-      @Override 
+      @Override
       protected void cancelled() {
         super.cancelled();
         updateMessage("Cancelled!");
@@ -176,7 +179,7 @@ public class LargeMotor extends Service<Void> {
         }
       }
 
-      @Override 
+      @Override
       protected void failed() {
         super.failed();
         updateMessage("Failed!");

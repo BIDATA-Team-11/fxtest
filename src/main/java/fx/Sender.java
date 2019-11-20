@@ -5,9 +5,28 @@ import javafx.concurrent.Service;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+/**
+ * TODO
+ *
+ * @author Stian Selvåg
+ * @author Herman Aagaard
+ * @author Henrik Hafsø
+ * @author Joakim Skogø Langvand
+ * @author Erling Sletta
+ * @author Torbjørn Øverås
+ * @author Gruppe 11, dataingeniør NTNU, første semester.
+ */
 public class Sender extends Service<Void> {
-  private final ConcurrentLinkedQueue<Coordinates> clq; 
-  public Sender(ConcurrentLinkedQueue<Coordinates> clq) { this.clq = clq; }
+  private final ConcurrentLinkedQueue<Coordinates> clq;
+
+  /**
+   * TODO
+   *
+   * @param clq TODO
+   */
+  public Sender(ConcurrentLinkedQueue<Coordinates> clq) {
+    this.clq = clq;
+  }
 
   protected Task<Void> createTask() {
     return new Task<Void>() {
@@ -16,14 +35,16 @@ public class Sender extends Service<Void> {
         int i = 0;
 
         while (true) {
-        // for (i = 0; i < 10; ++i) {
-          if (isCancelled()) { break; }
+          // for (i = 0; i < 10; ++i) {
+          if (isCancelled()) {
+            break;
+          }
 
           final int n = i;
 
           // System.out.printf("sending %s\n", n);
 
-          Coordinates c = new Coordinates(n, (n+2));
+          Coordinates c = new Coordinates(n, (n + 2));
           clq.add(c);
 
           ++i;
@@ -39,13 +60,13 @@ public class Sender extends Service<Void> {
         return null;
       }
 
-      @Override 
+      @Override
       protected void cancelled() {
         super.cancelled();
         updateMessage("Cancelled!");
       }
 
-      @Override 
+      @Override
       protected void failed() {
         super.failed();
         updateMessage("Failed!");

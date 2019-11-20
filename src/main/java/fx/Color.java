@@ -18,7 +18,6 @@ import javafx.concurrent.Service;
  * @author Erling Sletta
  * @author Torbjørn Øverås
  * @author Gruppe 11, dataingeniør NTNU, første semester.
- * @version 1.0.0
  */
 public class Color extends Service<Void> {
   private RMISampleProvider sampleProvider;
@@ -26,9 +25,11 @@ public class Color extends Service<Void> {
   private String port;
 
   /**
-   * Constructor that requires and sets the EV3 and the port the sensor is connected to,
-   * as well as creating a sample provider for the given port, with a sensor name and mode name.
-   * @param ev3 The ev3 that's being input
+   * Constructor that requires and sets the EV3 and the port the sensor is
+   * connected to, as well as creating a sample provider for the given port, with
+   * a sensor name and mode name.
+   *
+   * @param ev3  The ev3 that's being input
    * @param port The port the sensor is connected to
    */
   public Color(RemoteEV3 ev3, String port) {
@@ -38,29 +39,38 @@ public class Color extends Service<Void> {
   }
 
   /**
-   * Method that fetches and returns a sample in the form of a float array from the sensor
+   * Method that fetches and returns a sample in the form of a float array from
+   * the sensor
+   *
    * @return A float array sample
    * @throws RemoteException Throws a RemoteException if an error occurs
    */
   public float[] getSample() throws RemoteException {
-    float[] sample = null; 
+    float[] sample = null;
     sample = this.sampleProvider.fetchSample();
 
     return sample;
   }
 
   /**
-   * Method that returns the first sample in the float array provided by {@link Farge#getSample()}
+   * Method that returns the first sample in the float array provided by
+   * {@link Farge#getSample()}
+   *
    * @return The first element in the array given by {@link Farge#getSample()}
    * @throws RemoteException Throws a RemoteException if an error occurs
    */
-  public float getColor() throws RemoteException { return getSample()[0]; }
+  public float getColor() throws RemoteException {
+    return getSample()[0];
+  }
 
   /**
    * Override close method to close the sample provider
+   *
    * @throws IOException Throws an IOException if an error occurs
    */
-  public void close() throws RemoteException { this.sampleProvider.close(); }
+  public void close() throws RemoteException {
+    this.sampleProvider.close();
+  }
 
   protected Task<Void> createTask() {
     return new Task<Void>() {
@@ -68,7 +78,10 @@ public class Color extends Service<Void> {
 
       protected Void call() throws Exception {
         while (!isCancelled()) {
-          if (Thread.interrupted()) { close(); break; }
+          if (Thread.interrupted()) {
+            close();
+            break;
+          }
 
           colorID = getColor();
           // System.out.println(colorID);
@@ -77,7 +90,7 @@ public class Color extends Service<Void> {
         return null;
       }
 
-      @Override 
+      @Override
       protected void cancelled() {
         super.cancelled();
         updateMessage("Cancelled!");
@@ -88,7 +101,7 @@ public class Color extends Service<Void> {
         }
       }
 
-      @Override 
+      @Override
       protected void failed() {
         super.failed();
         updateMessage("Failed!");

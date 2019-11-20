@@ -7,11 +7,27 @@ import javafx.application.Platform;
 
 import javafx.concurrent.ScheduledService;
 
+/**
+ * TODO
+ *
+ * @author Stian Selvåg
+ * @author Herman Aagaard
+ * @author Henrik Hafsø
+ * @author Joakim Skogø Langvand
+ * @author Erling Sletta
+ * @author Torbjørn Øverås
+ * @author Gruppe 11, dataingeniør NTNU, første semester.
+ */
 public class ReceiverService extends ScheduledService<Void> {
   private final FXMLController c;
-  private final ConcurrentLinkedQueue<Coordinates> clq; 
+  private final ConcurrentLinkedQueue<Coordinates> clq;
 
-  public ReceiverService(FXMLController c, ConcurrentLinkedQueue<Coordinates> clq) { 
+  /**
+   *
+   * @param c   TODO
+   * @param clq TODO
+   */
+  public ReceiverService(FXMLController c, ConcurrentLinkedQueue<Coordinates> clq) {
     this.c = c;
     this.clq = clq;
   }
@@ -20,7 +36,7 @@ public class ReceiverService extends ScheduledService<Void> {
     return new Task<Void>() {
       protected Void call() throws Exception {
         Platform.runLater(new Runnable() {
-          @Override 
+          @Override
           public void run() {
             Coordinates k = clq.poll();
             if (k != null) {
@@ -32,13 +48,13 @@ public class ReceiverService extends ScheduledService<Void> {
         return null;
       }
 
-      @Override 
+      @Override
       protected void cancelled() {
         super.cancelled();
         updateMessage("Cancelled!");
       }
 
-      @Override 
+      @Override
       protected void failed() {
         super.failed();
         updateMessage("Failed!");

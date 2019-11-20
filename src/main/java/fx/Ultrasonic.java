@@ -19,7 +19,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * @author Erling Sletta
  * @author Torbjørn Øverås
  * @author Gruppe 11, dataingeniør NTNU, første semester.
- * @version 1.0.0
  */
 public class Ultrasonic extends Service<Void> {
   private RMISampleProvider sampleProvider;
@@ -34,7 +33,8 @@ public class Ultrasonic extends Service<Void> {
    *
    * @param port Physical port where the sensor is connected.
    */
-  public Ultrasonic(RemoteEV3 ev3, String port, ConcurrentLinkedQueue<Radar> radar, ConcurrentLinkedQueue<Integer> rotation) {
+  public Ultrasonic(RemoteEV3 ev3, String port, ConcurrentLinkedQueue<Radar> radar,
+      ConcurrentLinkedQueue<Integer> rotation) {
     this.port = port;
     this.ev3 = ev3;
     this.sampleProvider = ev3.createSampleProvider(this.port, "lejos.hardware.sensor.EV3UltrasonicSensor", "Distance");
@@ -49,7 +49,7 @@ public class Ultrasonic extends Service<Void> {
    * @throws RemoteException - Exception is thrown if an error occurs.
    */
   public float[] getSample() throws RemoteException {
-    float[] sample = null; 
+    float[] sample = null;
     sample = this.sampleProvider.fetchSample();
 
     return sample;
@@ -61,14 +61,19 @@ public class Ultrasonic extends Service<Void> {
    * @return the first value in the sample array, which measures distance.
    * @throws RemoteException - Exception is thrown if an error occurs.
    */
-  public float getDistance() throws RemoteException { return getSample()[0]; }
+  public float getDistance() throws RemoteException {
+    return getSample()[0];
+  }
 
   /**
    * Method for closing the ultrasonicsensor port.
    *
    * @throws IOException - Exception is thrown if an error occurs.
    */
-  public void close() throws Exception { this.sampleProvider.close(); cancel(); }
+  public void close() throws Exception {
+    this.sampleProvider.close();
+    cancel();
+  }
 
   protected Task<Void> createTask() {
     return new Task<Void>() {
@@ -78,7 +83,10 @@ public class Ultrasonic extends Service<Void> {
       protected Void call() throws Exception {
         try {
           while (!isCancelled()) {
-            if (Thread.interrupted()) { close(); break; }
+            if (Thread.interrupted()) {
+              close();
+              break;
+            }
 
             if (!rotation.isEmpty()) {
               Integer angle = rotation.poll();
@@ -105,7 +113,7 @@ public class Ultrasonic extends Service<Void> {
         return null;
       }
 
-      @Override 
+      @Override
       protected void cancelled() {
         super.cancelled();
         updateMessage("Cancelled!");
@@ -116,7 +124,7 @@ public class Ultrasonic extends Service<Void> {
         }
       }
 
-      @Override 
+      @Override
       protected void failed() {
         super.failed();
         updateMessage("Failed!");

@@ -15,6 +15,17 @@ import javafx.concurrent.ScheduledService;
 import javafx.concurrent.Task;
 import javafx.util.Duration;
 
+/**
+ * TODO
+ *
+ * @author Stian Selvåg
+ * @author Herman Aagaard
+ * @author Henrik Hafsø
+ * @author Joakim Skogø Langvand
+ * @author Erling Sletta
+ * @author Torbjørn Øverås
+ * @author Gruppe 11, dataingeniør NTNU, første semester.
+ */
 public class Chart extends Application {
   private RemoteEV3 connect() throws Exception {
     RemoteEV3 ev3 = new RemoteEV3("10.0.1.1");
@@ -23,6 +34,12 @@ public class Chart extends Application {
     return ev3;
   }
 
+  /**
+   * TODO: javadoc
+   *
+   * @param primaryStage TODO
+   * @throws Exception TODO
+   */
   @Override
   public void start(final Stage primaryStage) throws Exception {
     FXMLLoader loader = new FXMLLoader(getClass().getResource("view/chart.fxml"));
@@ -31,7 +48,7 @@ public class Chart extends Application {
     primaryStage.show();
 
     final FXMLController controller = loader.<FXMLController>getController();
-    
+
     final ConcurrentLinkedQueue<Coordinates> coordinates = new ConcurrentLinkedQueue<Coordinates>();
     final ConcurrentLinkedQueue<Radar> radar = new ConcurrentLinkedQueue<Radar>();
     final ConcurrentLinkedQueue<Integer> rotation = new ConcurrentLinkedQueue<Integer>();
@@ -54,15 +71,15 @@ public class Chart extends Application {
       rotator.start();
       sonic.start();
       car.start();
-    //   // gyro.start();
-    //   // color.start();
+      // // gyro.start();
+      // // color.start();
     } catch (Exception e) {
       sender.cancel();
       rotator.cancel();
       sonic.cancel();
       car.cancel();
-    //   // gyro.cancel();
-    //   // color.cancel();
+      // // gyro.cancel();
+      // // color.cancel();
     }
   }
 }

@@ -20,15 +20,17 @@ import javafx.concurrent.Service;
  * @author Gruppe 11, dataingeniør NTNU, første semester.
  * @version 1.0.0
  */
-public class Gyro extends Service<Void>  {
+public class Gyro extends Service<Void> {
   private RMISampleProvider sampleProvider;
   private RemoteEV3 ev3;
   private String port;
 
   /**
-   * Constructor that requires and sets the EV3 and the port the sensor is connected to,
-   * as well as creating a sample provider for the given port, with a sensor name and mode name.
-   * @param ev3 The ev3 that's being input
+   * Constructor that requires and sets the EV3 and the port the sensor is
+   * connected to, as well as creating a sample provider for the given port, with
+   * a sensor name and mode name.
+   *
+   * @param ev3  The ev3 that's being input
    * @param port The port the sensor is connected to
    */
   public Gyro(RemoteEV3 ev3, String port) {
@@ -39,29 +41,36 @@ public class Gyro extends Service<Void>  {
 
   /**
    * Method that fetches and returns a sample from the sensor
+   *
    * @return sample angle from sensor
    * @throws RemoteException Throws an exception if an error occurs
    */
   public float[] getSample() throws RemoteException {
-    float[] sample = null; 
+    float[] sample = null;
     sample = this.sampleProvider.fetchSample();
 
     return sample;
   }
 
   /**
-   * Method that executes {@link Gyro#getSample()} and returns the first element in the array
+   * Method that executes {@link Gyro#getSample()} and returns the first element
+   * in the array
+   *
    * @return The first element in the array given by {@link Gyro#getSample}
    * @throws RemoteException Throws a RemoteException if an error occurs
    */
-  public float getAngle() throws RemoteException { return getSample()[0]; }
+  public float getAngle() throws RemoteException {
+    return getSample()[0];
+  }
 
   /**
    * Override close method to close the sample provider
+   *
    * @throws IOException Throws an IOException if an error occurs
    */
-  public void close() throws Exception { this.sampleProvider.close(); }
-
+  public void close() throws Exception {
+    this.sampleProvider.close();
+  }
 
   protected Task<Void> createTask() {
     return new Task<Void>() {
@@ -69,7 +78,10 @@ public class Gyro extends Service<Void>  {
 
       protected Void call() throws Exception {
         while (!isCancelled()) {
-          if (Thread.interrupted()) { close(); break; }
+          if (Thread.interrupted()) {
+            close();
+            break;
+          }
 
           angle = getAngle();
           // System.out.println(angle);
@@ -78,7 +90,7 @@ public class Gyro extends Service<Void>  {
         return null;
       }
 
-      @Override 
+      @Override
       protected void cancelled() {
         super.cancelled();
         updateMessage("Cancelled!");
@@ -89,7 +101,7 @@ public class Gyro extends Service<Void>  {
         }
       }
 
-      @Override 
+      @Override
       protected void failed() {
         super.failed();
         updateMessage("Failed!");
