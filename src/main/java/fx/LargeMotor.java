@@ -1,11 +1,26 @@
+// Copyright (c) 2019 Several authors, see javadoc comment
+//
+// GNU GENERAL PUBLIC LICENSE
+//    Version 3, 29 June 2007
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 package fx;
 
 import lejos.remote.ev3.RemoteEV3;
 import lejos.remote.ev3.RMIRegulatedMotor;
-import lejos.robotics.RegulatedMotor;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
-
 import javafx.concurrent.Task;
 import javafx.concurrent.Service;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -35,8 +50,8 @@ public class LargeMotor extends Service<Void> {
    *
    * @param ev3 RMI connection to EV3 computer
    */
-  public LargeMotor(RemoteEV3 ev3, String port1, String port2, 
-      ConcurrentLinkedQueue<Coordinates> coordinates, ConcurrentLinkedQueue<Radar> radar) {
+  public LargeMotor(RemoteEV3 ev3, String port1, String port2, ConcurrentLinkedQueue<Coordinates> coordinates,
+      ConcurrentLinkedQueue<Radar> radar) {
     this.ev3 = ev3;
     this.leftMotor = this.ev3.createRegulatedMotor(port1, 'L');
     this.rightMotor = this.ev3.createRegulatedMotor(port2, 'L');
@@ -115,15 +130,18 @@ public class LargeMotor extends Service<Void> {
       int testX = 0;
       int testY = 0;
 
-      final float minimumDistanceToObstacle = 0.2f;    
-      final float maximumDistanceToObstacle = 0.4f;    
+      final float minimumDistanceToObstacle = 0.2f;
+      final float maximumDistanceToObstacle = 0.4f;
 
       boolean obstacleInFront = false;
 
       protected Void call() throws Exception {
         try {
           while (!isCancelled()) {
-            if (Thread.interrupted()) { close(); break; }
+            if (Thread.interrupted()) {
+              close();
+              break;
+            }
 
             if (!radar.isEmpty()) {
               Radar r = radar.poll();
