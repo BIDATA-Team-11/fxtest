@@ -25,7 +25,7 @@ import javafx.application.Platform;
 import javafx.concurrent.ScheduledService;
 
 /**
- * TODO
+ * Recieves cordiantes and updates user interface
  *
  * @author Stian Selvåg
  * @author Herman Aagaard
@@ -45,6 +45,10 @@ public class Receiver extends ScheduledService<Void> {
     this.c = c;
     this.clq = clq;
   }
+  /**
+  * Satisfy the Service class
+  * @see Service
+  */
   protected Task<Void> createTask() {
     return new Task<Void>() {
       protected Void call() throws Exception {

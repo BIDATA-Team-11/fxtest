@@ -28,7 +28,8 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.CategoryAxis;
 
 /**
- * TODO
+ * FXMLContorller is the controller for the OpenJFX Application.
+ * This controller contains the logic attached to the user interface.
  */
 public class FXMLController implements Initializable {
 
@@ -44,10 +45,10 @@ public class FXMLController implements Initializable {
   private NumberAxis yaxis;
 
   /**
-   * Initialise resource. TODO
+   * Initialise resources for the user interface.
    *
-   * @param url TODO
-   * @param rb  TODO
+   * @param url the path to the fxml file.
+   * @param rb available resources
    */
   @Override
   public void initialize(URL url, ResourceBundle rb) {
@@ -59,7 +60,7 @@ public class FXMLController implements Initializable {
   }
 
   /**
-   * TODO
+   * Updates the chart with new coordinates.
    *
    * @param c Coordinates instance
    */

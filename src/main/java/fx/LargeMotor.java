@@ -142,9 +142,9 @@ public class LargeMotor extends Service<Void> {
       boolean obstacleInFront = false;
 
       /**
+       * Driving logic for the car
        *
-       *
-       * @return
+       * @return null
        * @throws Exception Exception is thrown if an error occurs
        */
       protected Void call() throws Exception {
