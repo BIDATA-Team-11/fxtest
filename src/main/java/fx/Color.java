@@ -105,7 +105,7 @@ public class Color extends Service<Void> {
         while (!isCancelled()) {
           if (Thread.interrupted()) { close(); break; }
 
-          float colorID = getColor();
+         // float colorID = getColor();
         }
         return null;
       }

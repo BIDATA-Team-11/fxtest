@@ -48,6 +48,7 @@ public class MediumMotor extends Service<Void> {
    *
    * @param ev3 Remote connection to Ev3 computer
    * @param port physical port where the motor is connected.
+   * @param rotation Integer that gives rotation a value
    */
   public MediumMotor(RemoteEV3 ev3, String port, final ConcurrentLinkedQueue<Integer> rotation) {
     this.ev3 = ev3;
