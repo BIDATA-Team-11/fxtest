@@ -23,7 +23,6 @@ import lejos.remote.ev3.RMIRegulatedMotor;
 import java.rmi.RemoteException;
 import javafx.concurrent.Task;
 import javafx.concurrent.Service;
-
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
@@ -120,28 +119,6 @@ public class MediumMotor extends Service<Void> {
         }
 
         return null;
-      }
-
-      @Override
-      protected void cancelled() {
-        super.cancelled();
-        updateMessage("Cancelled!");
-        try {
-          close();
-        } catch (Exception e) {
-          System.out.println(e);
-        }
-      }
-
-      @Override
-      protected void failed() {
-        super.failed();
-        updateMessage("Failed!");
-        try {
-          close();
-        } catch (Exception e) {
-          System.out.println(e);
-        }
       }
     };
   }

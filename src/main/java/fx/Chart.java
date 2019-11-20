@@ -39,7 +39,7 @@ import javafx.util.Duration;
  * @author Gruppe 11, dataingeniør NTNU, første semester.
  */
 public class Chart extends Application {
-  private RemoteEV3 connect() throws Exception {
+  private RemoteEV3 connectEV3() throws Exception {
     RemoteEV3 ev3 = new RemoteEV3("10.0.1.1");
     ev3.setDefault();
 
@@ -65,13 +65,13 @@ public class Chart extends Application {
     final ConcurrentLinkedQueue<Radar> radar = new ConcurrentLinkedQueue<Radar>();
     final ConcurrentLinkedQueue<Integer> rotation = new ConcurrentLinkedQueue<Integer>();
 
-    final ReceiverService receiver = new ReceiverService(controller, coordinates);
+    final Receiver receiver = new Receiver(controller, coordinates);
     receiver.setPeriod(Duration.seconds(2));
     receiver.start();
 
-    final RemoteEV3 ev3 = connect();
+    final RemoteEV3 ev3 = connectEV3();
 
-    final Sender sender = new Sender(coordinates);
+    // final Sender sender = new Sender(coordinates);
     final MediumMotor rotator = new MediumMotor(ev3, "B", rotation);
     final Ultrasonic sonic = new Ultrasonic(ev3, "S1", radar, rotation);
     final LargeMotor car = new LargeMotor(ev3, "A", "C", coordinates, radar);
@@ -79,14 +79,14 @@ public class Chart extends Application {
     // final Color color = new Color(ev3, "S3");
 
     try {
-      sender.start();
+      // sender.start();
       rotator.start();
       sonic.start();
       car.start();
       // // gyro.start();
       // // color.start();
     } catch (Exception e) {
-      sender.cancel();
+      // sender.cancel();
       rotator.cancel();
       sonic.cancel();
       car.cancel();

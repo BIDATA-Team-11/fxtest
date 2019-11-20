@@ -146,8 +146,6 @@ public class LargeMotor extends Service<Void> {
             if (!radar.isEmpty()) {
               Radar r = radar.poll();
 
-              System.out.printf("Distance: %s Angle: %s\n", r.distance, r.angle);
-
               if (r.angle <= 0) {
                 if (r.distance < minimumDistanceToObstacle) {
                   right();
@@ -169,7 +167,7 @@ public class LargeMotor extends Service<Void> {
                 forward();
               }
 
-              coordinates.add(new Coordinates(++testX, ++testY));
+              coordinates.add(new Coordinates(++testX, (int) r.distance));
             }
 
           }
@@ -180,28 +178,6 @@ public class LargeMotor extends Service<Void> {
         }
 
         return null;
-      }
-
-      @Override
-      protected void cancelled() {
-        super.cancelled();
-        updateMessage("Cancelled!");
-        try {
-          close();
-        } catch (Exception e) {
-          System.out.println(e);
-        }
-      }
-
-      @Override
-      protected void failed() {
-        super.failed();
-        updateMessage("Failed!");
-        try {
-          close();
-        } catch (Exception e) {
-          System.out.println(e);
-        }
       }
     };
   }
