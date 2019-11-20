@@ -19,7 +19,7 @@
 package fx;
 
 /**
- * Class for holding radar reading data.
+ * Class for concurrent linked que
  *
  * @author Stian Selvåg
  * @author Herman Aagaard
