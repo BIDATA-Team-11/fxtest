@@ -48,7 +48,7 @@ public class LargeMotor extends Service<Void> {
    * Constructer for setting value of ev3. It also pairs left and right motor with
    * ports.
    *
-   * @param ev3 RMI connection to EV3 computer
+   * @param ev3 Remote connection to EV3 computer
    */
   public LargeMotor(RemoteEV3 ev3, String port1, String port2, ConcurrentLinkedQueue<Coordinates> coordinates,
       ConcurrentLinkedQueue<Radar> radar) {
@@ -62,7 +62,7 @@ public class LargeMotor extends Service<Void> {
   /**
    * Method for closing port A and C.
    *
-   * @throws RemoteException - Exception is thrown if an error occurss.
+   * @throws RemoteException - Exception is thrown if an error occurs.
    */
   public void close() throws RemoteException {
     try {
@@ -78,7 +78,7 @@ public class LargeMotor extends Service<Void> {
   /**
    * Method for stopping both motors.
    *
-   * @throws RemoteException - Exception is thrown if an error occurss.
+   * @throws RemoteException - Exception is thrown if an error occurs.
    */
   public void stop() throws RemoteException {
     this.leftMotor.stop(true);
@@ -88,7 +88,7 @@ public class LargeMotor extends Service<Void> {
   /**
    * Method got making the car turn left.
    *
-   * @throws RemoteException - Exception is thrown if an error occurss.
+   * @throws RemoteException - Exception is thrown if an error occurs.
    */
   public void left() throws RemoteException {
     this.rightMotor.backward();
@@ -98,7 +98,7 @@ public class LargeMotor extends Service<Void> {
   /**
    * Method for making the car turn right.
    *
-   * @throws RemoteException - Exception is thrown if an error occurss.
+   * @throws RemoteException - Exception is thrown if an error occurs.
    */
   public void right() throws RemoteException {
     this.leftMotor.backward();
@@ -108,7 +108,7 @@ public class LargeMotor extends Service<Void> {
   /**
    * Method for making the motors drive backwards.
    *
-   * @throws RemoteException - Exception is thrown if an error occurss.
+   * @throws RemoteException - Exception is thrown if an error occurs.
    */
   public void backward() throws RemoteException {
     this.leftMotor.forward();
@@ -118,13 +118,19 @@ public class LargeMotor extends Service<Void> {
   /**
    * Method for making the motors drive forwards.
    *
-   * @throws RemoteException - Exception is thrown if an error occurss.
+   * @throws RemoteException - Exception is thrown if an error occurs.
    */
   public void forward() throws RemoteException {
     this.leftMotor.backward();
     this.rightMotor.backward();
   }
 
+  /**
+   * Satisfies the Service class
+   *
+   * @return null
+   * @see Service
+   */
   protected Task<Void> createTask() {
     return new Task<Void>() {
       int testX = 0;
@@ -135,6 +141,12 @@ public class LargeMotor extends Service<Void> {
 
       boolean obstacleInFront = false;
 
+      /**
+       *
+       *
+       * @return
+       * @throws Exception Exception is thrown if an error occurs
+       */
       protected Void call() throws Exception {
         try {
           while (!isCancelled()) {
