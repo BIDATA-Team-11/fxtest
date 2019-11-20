@@ -36,8 +36,8 @@ public class Coordinates {
   /**
    * Constructs a coordinate object.
    *
-   * @param x
-   * @param y
+   * @param x Puts a point along the x-axis
+   * @param y Puts a point along the y-axis
    */
   public Coordinates(int x, int y) {
     this.x = x;
