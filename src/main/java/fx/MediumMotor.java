@@ -46,6 +46,7 @@ public class MediumMotor extends Service<Void> {
   /**
    * Construct new simplemotor object using default Ev3 brick.
    *
+   * @param ev3 Remote connection to Ev3 computer
    * @param port physical port where the motor is connected.
    */
   public MediumMotor(RemoteEV3 ev3, String port, final ConcurrentLinkedQueue<Integer> rotation) {
