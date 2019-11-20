@@ -86,8 +86,20 @@ public class Color extends Service<Void> {
     this.sampleProvider.close();
   }
 
+  /**
+   * Satisfies the Service class
+   *
+   * @return null
+   * @see Service
+   */
   protected Task<Void> createTask() {
     return new Task<Void>() {
+      /**
+       * Logic for using the color sensor
+       *
+       * @return null
+       * @throws Exception Exception is thrown if an error occurs
+       */
       protected Void call() throws Exception {
         while (!isCancelled()) {
           if (Thread.interrupted()) { close(); break; }
