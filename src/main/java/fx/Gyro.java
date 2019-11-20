@@ -86,6 +86,12 @@ public class Gyro extends Service<Void> {
     this.sampleProvider.close();
   }
 
+  /**
+   * Satisfies the Service class
+   *
+   * @return null
+   * @see Service
+   */
   protected Task<Void> createTask() {
     return new Task<Void>() {
       protected Void call() throws Exception {
