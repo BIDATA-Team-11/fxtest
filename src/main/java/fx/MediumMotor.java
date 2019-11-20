@@ -89,10 +89,22 @@ public class MediumMotor extends Service<Void> {
     this.motor.rotateTo(angle);
   }
 
+  /**
+   * Satisfies the Service class
+   *
+   * @return null
+   * @see Service
+   */
   protected Task<Void> createTask() {
     return new Task<Void>() {
       boolean resetAngle = false;
 
+      /**
+       * Logic for making the mediumMotor rotate
+       *
+       * @return null
+       * @throws Exception Exception is thrown if an error occurs
+       */
       protected Void call() throws Exception {
         try {
           while (!isCancelled()) {
