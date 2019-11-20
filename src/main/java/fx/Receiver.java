@@ -47,7 +47,7 @@ public class Receiver extends ScheduledService<Void> {
   }
   /**
   * Satisfy the Service class
-  * @see Service
+  * @see ScheduledService
   */
   protected Task<Void> createTask() {
     return new Task<Void>() {
