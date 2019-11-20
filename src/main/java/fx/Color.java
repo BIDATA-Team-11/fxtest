@@ -94,6 +94,7 @@ public class Color extends Service<Void> {
    */
   protected Task<Void> createTask() {
     return new Task<Void>() {
+
       /**
        * Logic for using the color sensor
        *
