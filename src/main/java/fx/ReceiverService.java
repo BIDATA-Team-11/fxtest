@@ -63,18 +63,6 @@ public class ReceiverService extends ScheduledService<Void> {
 
         return null;
       }
-
-      @Override
-      protected void cancelled() {
-        super.cancelled();
-        updateMessage("Cancelled!");
-      }
-
-      @Override
-      protected void failed() {
-        super.failed();
-        updateMessage("Failed!");
-      }
     };
   }
 }

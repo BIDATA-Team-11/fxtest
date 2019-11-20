@@ -21,10 +21,6 @@ package fx;
 import lejos.remote.ev3.RemoteEV3;
 import lejos.remote.ev3.RMIRegulatedMotor;
 import java.rmi.RemoteException;
-<<<<<<< HEAD
-
-=======
->>>>>>> c45fa48694cdc95aec7ae9cee3ded67ca1e3b1e9
 import javafx.concurrent.Task;
 import javafx.concurrent.Service;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -183,31 +179,6 @@ public class LargeMotor extends Service<Void> {
 
         return null;
       }
-<<<<<<< HEAD
-=======
-
-      @Override
-      protected void cancelled() {
-        super.cancelled();
-        updateMessage("Cancelled!");
-        try {
-          close();
-        } catch (Exception e) {
-          System.out.println(e);
-        }
-      }
-
-      @Override
-      protected void failed() {
-        super.failed();
-        updateMessage("Failed!");
-        try {
-          close();
-        } catch (Exception e) {
-          System.out.println(e);
-        }
-      }
->>>>>>> c45fa48694cdc95aec7ae9cee3ded67ca1e3b1e9
     };
   }
 }

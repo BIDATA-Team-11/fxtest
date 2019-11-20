@@ -59,13 +59,7 @@ public class Sender extends Service<Void> {
 
           final int n = i;
 
-<<<<<<< HEAD
           Coordinates c = new Coordinates(n, (n+2));
-=======
-          // System.out.printf("sending %s\n", n);
-
-          Coordinates c = new Coordinates(n, (n + 2));
->>>>>>> c45fa48694cdc95aec7ae9cee3ded67ca1e3b1e9
           clq.add(c);
 
           ++i;
@@ -79,21 +73,6 @@ public class Sender extends Service<Void> {
 
         return null;
       }
-<<<<<<< HEAD
-=======
-
-      @Override
-      protected void cancelled() {
-        super.cancelled();
-        updateMessage("Cancelled!");
-      }
-
-      @Override
-      protected void failed() {
-        super.failed();
-        updateMessage("Failed!");
-      }
->>>>>>> c45fa48694cdc95aec7ae9cee3ded67ca1e3b1e9
     };
   }
 }
