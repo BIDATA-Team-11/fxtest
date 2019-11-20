@@ -20,18 +20,8 @@ package fx;
 
 import javafx.concurrent.Task;
 import java.util.concurrent.ConcurrentLinkedQueue;
-<<<<<<< HEAD
 import javafx.application.Platform;
-
 import javafx.concurrent.ScheduledService;
-
-public class Receiver extends ScheduledService<Void> {
-  private final FXMLController c;
-  private final ConcurrentLinkedQueue<Coordinates> clq; 
-
-  public Receiver(FXMLController c, ConcurrentLinkedQueue<Coordinates> clq) { 
-=======
-import javafx.stage.Stage;
 
 /**
  * TODO
@@ -44,26 +34,25 @@ import javafx.stage.Stage;
  * @author Torbjørn Øverås
  * @author Gruppe 11, dataingeniør NTNU, første semester.
  */
-public class Receiver extends Task<Void> {
+public class ReceiverService extends ScheduledService<Void> {
   private final FXMLController c;
   private final ConcurrentLinkedQueue<Coordinates> clq;
 
-  // public Receiver(FXMLController c, ConcurrentLinkedQueue<Coordinates> clq) {
   /**
-   * TODO
+   *
+   * @param c   TODO
+   * @param clq TODO
    */
-  public Receiver(FXMLController c, ConcurrentLinkedQueue<Coordinates> clq, Stage primaryStage) {
->>>>>>> c45fa48694cdc95aec7ae9cee3ded67ca1e3b1e9
+  public ReceiverService(FXMLController c, ConcurrentLinkedQueue<Coordinates> clq) {
     this.c = c;
     this.clq = clq;
   }
 
-<<<<<<< HEAD
   protected Task<Void> createTask() {
     return new Task<Void>() {
       protected Void call() throws Exception {
         Platform.runLater(new Runnable() {
-          @Override 
+          @Override
           public void run() {
             Coordinates k = clq.poll();
             if (k != null) {
@@ -74,40 +63,18 @@ public class Receiver extends Task<Void> {
 
         return null;
       }
+
+      @Override
+      protected void cancelled() {
+        super.cancelled();
+        updateMessage("Cancelled!");
+      }
+
+      @Override
+      protected void failed() {
+        super.failed();
+        updateMessage("Failed!");
+      }
     };
-=======
-  @Override
-  protected Void call() throws Exception {
-    // while (!isCancelled()) {
-    System.out.println("I am triggered");
-    Coordinates c = this.clq.poll();
-
-    if (c != null) {
-      System.out.println(c.x);
-      this.c.mapping(c);
-    }
-
-    // Platform.runLater(new Runnable() {
-    // @Override
-    // public void run() {
-    // primaryStage.show();
-    // }
-    // });
-    // }
-
-    return null;
-  }
-
-  @Override
-  protected void cancelled() {
-    super.cancelled();
-    updateMessage("Cancelled!");
-  }
-
-  @Override
-  protected void failed() {
-    super.failed();
-    updateMessage("Failed!");
->>>>>>> c45fa48694cdc95aec7ae9cee3ded67ca1e3b1e9
   }
 }
