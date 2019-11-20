@@ -7,3 +7,7 @@
 build
 bin
 jdt.ls-java-project
+
+# Ignore IDE files
+.settings
+.classpath
