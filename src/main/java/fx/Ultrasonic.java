@@ -3,7 +3,6 @@ package fx;
 import lejos.remote.ev3.RemoteEV3;
 import lejos.remote.ev3.RMISampleProvider;
 import java.rmi.RemoteException;
-import java.lang.InterruptedException;
 
 import javafx.concurrent.Task;
 import javafx.concurrent.Service;
@@ -103,28 +102,6 @@ public class Ultrasonic extends Service<Void> {
         }
 
         return null;
-      }
-
-      @Override 
-      protected void cancelled() {
-        super.cancelled();
-        updateMessage("Cancelled!");
-        try {
-          close();
-        } catch (Exception e) {
-          System.out.println(e);
-        }
-      }
-
-      @Override 
-      protected void failed() {
-        super.failed();
-        updateMessage("Failed!");
-        try {
-          close();
-        } catch (Exception e) {
-          System.out.println(e);
-        }
       }
     };
   }
