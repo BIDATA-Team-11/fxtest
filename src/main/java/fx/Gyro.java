@@ -45,7 +45,7 @@ public class Gyro extends Service<Void> {
    * connected to, as well as creating a sample provider for the given port, with
    * a sensor name and mode name.
    *
-   * @param ev3  The ev3 that's being input
+   * @param ev3  Remote connection to Ev3 computer
    * @param port The port the sensor is connected to
    */
   public Gyro(RemoteEV3 ev3, String port) {
