@@ -47,6 +47,9 @@ public class Ultrasonic extends Service<Void> {
    * Construct new ultrasonic object using default EV3 brick.
    *
    * @param port Physical port where the sensor is connected.
+   * @param ev3 remote connection to ev3
+   * @param port String for what port the supersonic is plugged into
+   * @param rotation integer that gives a rotation value
    */
   public Ultrasonic(RemoteEV3 ev3, String port, ConcurrentLinkedQueue<Radar> radar,
       ConcurrentLinkedQueue<Integer> rotation) {
